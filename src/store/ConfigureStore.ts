@@ -1,8 +1,10 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import AppSlice from "./slice/AppSlice";
 
 const ConfigureStore = configureStore({
   reducer: {
+    AppSlice,
   },
   devTools: true,
 });
