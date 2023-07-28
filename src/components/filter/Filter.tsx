@@ -9,7 +9,7 @@ const Accordion = lazy(() => import("../accordion/Accordion"));
 
 const Filter: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectCharactersStatus, selectGender, selectSpecie } = useSelectors();
+  const { selectStatus, selectGender, selectSpecie } = useSelectors();
   const handleClearAll = () => {
     dispatch(clearAll());
     dispatch(fetchCharacters({}));
@@ -17,7 +17,7 @@ const Filter: FC = () => {
   return (
     <div className={style.filterRoot}>
       <p className={style.title}>filters</p>
-      {(selectCharactersStatus || selectGender || selectSpecie) && (
+      {(selectStatus || selectGender || selectSpecie) && (
         <Button
           variant={"outlined"}
           size="small"

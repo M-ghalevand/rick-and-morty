@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Pagination as MUIPagination ,Stack } from "@mui/material";
+import { Pagination as MUIPagination, Stack } from "@mui/material";
 import style from "./pagination.module.scss";
 import useSelectors from "../../hooks/useSelectors";
 import { fetchCharacters, setPagination } from "../../store/slice/AppSlice";
@@ -7,13 +7,8 @@ import { useAppDispatch } from "../../store/ConfigureStore";
 
 const Pagination: FC = () => {
   const dispatch = useAppDispatch();
-  const {
-    selectedPage,
-    selectInfo,
-    selectCharactersStatus,
-    selectGender,
-    selectSpecie,
-  } = useSelectors();
+  const { selectedPage, selectInfo, selectStatus, selectGender, selectSpecie } =
+    useSelectors();
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     dispatch(
@@ -21,7 +16,7 @@ const Pagination: FC = () => {
         page: value,
         gender: selectGender,
         species: selectSpecie,
-        status: selectCharactersStatus,
+        status: selectStatus,
       })
     );
     dispatch(setPagination(value));

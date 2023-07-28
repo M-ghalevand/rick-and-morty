@@ -24,17 +24,15 @@ import useSelectors from "../../hooks/useSelectors";
 
 const Accordion: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedPage, selectCharactersStatus, selectGender, selectSpecie } =
+  const { selectedPage, selectStatus, selectGender, selectSpecie } =
     useSelectors();
   const handleStatus = (status: string): void => {
-    dispatch(
-      setCharactersStatus(selectCharactersStatus !== status ? status : "")
-    );
+    dispatch(setCharactersStatus(selectStatus !== status ? status : ""));
     dispatch(setPagination(1));
     dispatch(
       fetchCharacters({
         page: selectedPage,
-        status: selectCharactersStatus !== status ? status : "",
+        status: selectStatus !== status ? status : "",
         species: selectSpecie,
         gender: selectGender,
       })
@@ -46,7 +44,7 @@ const Accordion: FC = () => {
     dispatch(
       fetchCharacters({
         page: selectedPage,
-        status: selectCharactersStatus,
+        status: selectStatus,
         species: selectSpecie !== species ? species : "",
         gender: selectGender,
       })
@@ -58,7 +56,7 @@ const Accordion: FC = () => {
     dispatch(
       fetchCharacters({
         page: selectedPage,
-        status: selectCharactersStatus,
+        status: selectStatus,
         species: selectSpecie,
         gender: selectGender !== gender ? gender : "",
       })
@@ -73,18 +71,14 @@ const Accordion: FC = () => {
           id="panel1a-header"
         >
           <Typography>Status</Typography>
-          {selectCharactersStatus && (
-            <span className={style.AccordionSelected}>
-              {selectCharactersStatus}
-            </span>
+          {selectStatus && (
+            <span className={style.AccordionSelected}>{selectStatus}</span>
           )}
         </AccordionSummary>
         <AccordionDetails>
           {statusData.map((status) => (
             <Button
-              variant={
-                selectCharactersStatus === status ? "contained" : "outlined"
-              }
+              variant={selectStatus === status ? "contained" : "outlined"}
               size="small"
               color={"success"}
               sx={{ margin: "10px" }}
