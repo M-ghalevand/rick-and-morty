@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, lazy, useEffect } from "react";
+import { useAppDispatch } from "./store/ConfigureStore";
+import { fetchCharacters, fetchGeneralInfo } from "./store/slice/AppSlice";
 
-function App() {
+const Header = lazy(() => import("./components/header/Header"));
+const Content = lazy(() => import("./components/content/Content"));
+
+const App: FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCharacters({ page: 1 }));
+    dispatch(fetchGeneralInfo());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Content />
+    </>
   );
-}
+};
 
 export default App;

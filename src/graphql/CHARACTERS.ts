@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import IFetchCharacters from "../types/slice/IFetchCharacters";
+import IFetchCharacters from "../types/IFetchCharacters";
 // , filter: {species: ${species}, gender: ${gender}, status: ${status}}
 const CHARACTERS = ({
   page = 1,
