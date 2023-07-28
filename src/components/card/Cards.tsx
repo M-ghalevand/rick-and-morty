@@ -5,8 +5,10 @@ import Card from "./Card";
 import { useAppSelector } from "../../store/ConfigureStore";
 import { selectEntities } from "../../store/slice/AppSlice";
 import useSelectors from "../../hooks/useSelectors";
+import Skeleton from "./Skeleton";
+
 const Cards: FC = () => {
-  const { selectSearchBox } = useSelectors();
+  const { selectSearchBox, selectCharacterLoading } = useSelectors();
   const SelectEntities = useAppSelector(selectEntities);
   const SelectEntitiesArray = Object.values(
     SelectEntities
@@ -14,11 +16,17 @@ const Cards: FC = () => {
   const filterSelectEntitiesArray = SelectEntitiesArray.filter((item) =>
     item.name.toLowerCase().includes(selectSearchBox.trim().toLowerCase())
   );
+  const Skeletons: React.ReactNode[] = [];
+  for (let i = 0; i < 20; i++) {
+    Skeletons.push(<Skeleton key={i} />);
+  }
   return (
     <div className={style.cardsRoot}>
-      {filterSelectEntitiesArray.map((item) => (
-        <Card key={item.id} {...item} />
-      ))}
+      {!selectCharacterLoading
+        ? filterSelectEntitiesArray.map((item) => (
+            <Card key={item.id} {...item} />
+          ))
+        : Skeletons}
     </div>
   );
 };

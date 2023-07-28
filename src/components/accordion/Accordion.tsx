@@ -78,6 +78,7 @@ const Accordion: FC = () => {
         <AccordionDetails>
           {statusData.map((status) => (
             <Button
+              key={status}
               variant={selectStatus === status ? "contained" : "outlined"}
               size="small"
               color={"success"}
@@ -103,6 +104,7 @@ const Accordion: FC = () => {
         <AccordionDetails>
           {speciesData.map((specie) => (
             <Button
+              key={specie}
               variant={selectSpecie === specie ? "contained" : "outlined"}
               size="small"
               color={"success"}
@@ -128,6 +130,7 @@ const Accordion: FC = () => {
         <AccordionDetails>
           {gendersData.map((gender) => (
             <Button
+              key={gender}
               variant={selectGender === gender ? "contained" : "outlined"}
               size="small"
               color={"success"}
