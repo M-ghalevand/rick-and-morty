@@ -7,17 +7,25 @@ import {
   CardActionArea,
 } from "@mui/material";
 import type ICharacterResult from "../../types/ICharacterResult";
+import Modal from "../modal/Modal";
+import { useState } from "react";
 
 const Card: FC<ICharacterResult> = ({
+  id,
   episode,
   image,
   location,
   name,
   status,
 }) => {
+  const [open, setOpen] = useState<boolean>(false);
   return (
     <MuiCard>
-      <CardActionArea sx={{ position: "relative", width: 256, height: 380 }}>
+      <Modal open={open} setOpen={setOpen} id={id} />
+      <CardActionArea
+        sx={{ position: "relative", width: 256, height: 380 }}
+        onClick={() => setOpen(true)}
+      >
         <CardMedia
           loading={"lazy"}
           component="img"

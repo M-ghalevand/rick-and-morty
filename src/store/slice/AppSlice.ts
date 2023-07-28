@@ -57,7 +57,7 @@ export const fetchGeneralInfo: AsyncThunk<
 const adapter = createEntityAdapter<ICharacterResult>({
   sortComparer: (a, b) => Number(a.id) - Number(b.id),
 });
-export const { selectEntities } = adapter.getSelectors(
+export const { selectEntities, selectById } = adapter.getSelectors(
   (state: RootState) => state.AppSlice
 );
 const Mode = typeof window !== "undefined" && localStorage.getItem("Mode");
@@ -111,6 +111,7 @@ const AppSlice = createSlice({
     // change themeMode to state
     changeModeTheme(state, action: PayloadAction<"light" | "dark">) {
       state.themeMode = action.payload;
+      localStorage.setItem("Mode", action.payload);
     },
     // change status to state
     setCharactersStatus(state, action: PayloadAction<string>) {
