@@ -39,3 +39,12 @@
     }
   }
 }
+
+@media screen and (max-width: 716px) {
+  .contentRoot{
+    flex-direction: column;
+    .content {
+      width: 100%;
+    }
+  }
+}

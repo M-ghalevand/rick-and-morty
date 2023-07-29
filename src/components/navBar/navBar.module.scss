@@ -29,3 +29,48 @@
     top: 10px
   }
 }
+
+@media screen and (max-width: 1024px) {
+.items{
+  margin: 29px 0 0 40% !important;
+  //display: none !important;
+}
+  .icon {
+
+    left: 10% !important;
+  }
+}
+
+@media screen and (max-width: 845px) {
+  .items{
+    margin: 29px 0 0 25% !important;
+    //display: none !important;
+  }
+  .icon {
+
+    left: 6% !important;
+  }
+}
+
+@media screen and (max-width: 675px) {
+  .items{
+    margin: 29px 0 0 0 !important;
+    p {
+      margin: 0 10px !important;
+
+    }
+  }
+  .icon {
+    display: none !important;
+
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .items{
+    display: none !important;
+  }
+  .icon {
+    display: block !important;
+  }
+}
