@@ -7,24 +7,43 @@ import useSelectors from "./hooks/useSelectors";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedPage, selectedStatus, selectedGender, selectedSpecies } =
-    useSelectors();
+  const {
+    selectedPage,
+    selectedStatus,
+    selectedGender,
+    selectedSpecies,
+    selectSearchBox,
+  } = useSelectors();
 
   //fetching characters based on one of the following factors or more specified by the user: selectedPage, status, gender, species
   useEffect(() => {
-    dispatch(
+    const promise = dispatch(
       fetchCharacters({
         page: selectedPage,
         status: selectedStatus,
         gender: selectedGender,
         species: selectedSpecies,
+        name: selectSearchBox,
       })
     );
-  }, [dispatch, selectedPage, selectedStatus, selectedGender, selectedSpecies]);
+    return () => {
+      promise.abort();
+    };
+  }, [
+    dispatch,
+    selectedPage,
+    selectedStatus,
+    selectedGender,
+    selectedSpecies,
+    selectSearchBox,
+  ]);
 
   //fetching general info in first render
   useEffect(() => {
-    dispatch(fetchGeneralInfo());
+    const promise = dispatch(fetchGeneralInfo());
+    return () => {
+      promise.abort();
+    };
   }, [dispatch]);
 
   return (

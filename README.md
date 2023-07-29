@@ -1,46 +1,78 @@
-# Getting Started with Create React App
+# Rick and Morty Character Search App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Project Screenshot](./RickAndMorty.png)
 
-## Available Scripts
+## فهرست مطالب 
 
-In the project directory, you can run:
+- [Description](#description)
+- [Demo](#demo)
+- [Installation](#installation)
+- [usage](#usage)
+- [technologies-used](#technologies-used)
+- [features](#features)
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Description
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+برنامه جستجوی شخصیت ریک و مورتی یک برنامه وب مبتنی بر ری‌اکت است که به کاربران اجازه می‌دهد شخصیت‌های برنامه تلویزیونی انیمیشن محبوب «ریک و مورتی» را جستجو و فیلتر کنند. کاربران می توانند با جستجو کردن در کادر جستجو یک لیست صفحه بندی شده از شخصیت‌های منطبق را مشاهده کنند.
 
-### `yarn test`
+----
+## Demo
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+نسخه پابلیش شده روی سرور 
+ [لینک](https://rick-and-morty-git-master-m-ghalevand.vercel.app/)
 
-### `yarn build`
+---
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+برای اجرای پروژه به صورت محلی، مراحل زیر را انجام دهید:
+==
+1. کلون کردن ریپازیتوری:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```shell
+git clone https://github.com/M-ghalevand/rick-and-morty.git
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. به دایرکتوری پروژه بروید:
 
-### `yarn eject`
+```shell
+cd rick-and-morty
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. وابستگی ها را نصب کنید:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```shell
+yarn
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4.  راه‌ اندازی سرور:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```shell
+yarn start
+```
 
-## Learn More
+اکنون برنامه در این آدرس در حال اجرا می‌باشد. 
+[`http://localhost:3000`](http://localhost:3000)
+---
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- نام شخصیت ریک و مورتی را که می خواهید جستجو کنید را در کادر جستجو وارد کنید.
+- برنامه یک لیست صفحه بندی شده از شخصیت‌ها را نمایش می دهد که با عبارت جستجو مطابقت دارند.
+- بر روی شماره صفحه کلیک کنید یا از دکمه های "بعدی" و "قبلی" برای پیمایش در لیست صفحه بندی شده استفاده کنید
+- شما می‌توانید با استفاده از فیلترهای مختلف، لیست شخصیت‌ها را بر اساس وضعیت، جنسیت و گونه‌ها فیلتر کنید.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Technologies Used
+
+- React 
+- typescript
+- Redux Toolkit
+- Apollo Client  requests
+- Material-UI for UI components
+- SASS for CSS styling
+
+## Features
+
+- جستجو و فیلتر شخصیت های ریک و مورتی
+- نمایش صفحه بندی شده نتایج برای تجربه کاربری بهتر.
+- نمایش فیلترها
+- طراحی ریسپانسیو جهت نمایش در دستگاه های مختلف.

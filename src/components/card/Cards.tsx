@@ -16,10 +16,6 @@ const Cards: FC = () => {
     SelectEntities
   ) as ICharacterResult[];
 
-  const filterSelectEntitiesArray = SelectEntitiesArray.filter((item) =>
-    item.name.toLowerCase().includes(selectSearchBox.trim().toLowerCase())
-  );
-
   const CardsSkeleton: React.ReactNode[] = useMemo(() => {
     const Skeletons: React.ReactNode[] = [];
     for (let i = 0; i < 20; i++) {
@@ -45,7 +41,7 @@ const Cards: FC = () => {
     <div className={styles.cardsRoot}>
       {!characterLoading ? (
         <Suspense>
-          {filterSelectEntitiesArray.map((item) => (
+          {SelectEntitiesArray.map((item) => (
             <Card key={item.id} {...item} color={statusColor(item.status)} />
           ))}
         </Suspense>

@@ -6,9 +6,10 @@ const CHARACTERS = ({
   species = "",
   gender = "",
   status = "",
+  name = "",
 }: IParamsToFetchCharacters) => gql`
   {
-    characters(page: ${page}, filter: { species: "${species}", gender: "${gender}", status: "${status}"}) {
+    characters(page: ${page}, filter: { species: "${species}", gender: "${gender}", status: "${status}", name: "${name}"}) {
       info {
         count
         pages

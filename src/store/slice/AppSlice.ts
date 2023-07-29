@@ -18,10 +18,11 @@ import GENERAL_INFO from "../../graphql/GENERAL_INFO";
 export const fetchCharacters = createAsyncThunk<
   IResponseCharacters,
   IParamsToFetchCharacters
->("AsyncThunk/Characters", async ({ page, status, species, gender }) => {
+>("AsyncThunk/Characters", async ({ page, status, species, gender, name }) => {
   const { data } = await apolloClient.query({
-    query: CHARACTERS({ page, status, species, gender }),
+    query: CHARACTERS({ page, status, species, gender, name }),
   });
+
   return data;
 });
 // fetchGeneralInfo: returns total counts of characters, episodes and locations.

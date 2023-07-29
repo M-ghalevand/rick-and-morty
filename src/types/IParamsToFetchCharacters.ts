@@ -3,4 +3,5 @@ export default interface IParamsToFetchCharacters {
   species?: string;
   gender?: string;
   status?: string;
+  name?: string;
 }
