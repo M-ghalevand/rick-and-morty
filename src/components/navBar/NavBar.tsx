@@ -1,31 +1,37 @@
-import style from "./navBar.module.scss";
-import Icon from "../../assets/svg/Icon";
-import NightDayModeToggleSwitch from "../nightDayModeToggleSwitch/NightDayModeToggleSwitch";
-
-import type { FC } from "react";
-import * as React from "react";
-import { CircularProgress } from "@mui/material";
+import { FC, lazy, Suspense } from "react";
+import styles from "./navBar.module.scss";
 import useSelectors from "../../hooks/useSelectors";
 
+const Icon = lazy(() => import("../../assets/svg/Icon"));
+const NightDayModeToggleSwitch = lazy(
+  () => import("../nightDayModeToggleSwitch/NightDayModeToggleSwitch")
+);
+const CircularProgress = lazy(() => import("@mui/material/CircularProgress"));
+
 const NavBar: FC = () => {
-  const { themeMode, selectGeneralInfoLoading, selectGeneralInfo } =
-    useSelectors();
+  const { themeMode, generalInfoLoading, selectGeneralInfo } = useSelectors();
 
   return (
     <nav
-      className={style.nav}
+      className={styles.nav}
       style={{ backgroundColor: themeMode === "dark" ? "black" : "white" }}
     >
-      <NightDayModeToggleSwitch />
-      <div className={style.icon}>
-        <Icon />
+      <Suspense>
+        <NightDayModeToggleSwitch />
+      </Suspense>
+      <div className={styles.icon}>
+        <Suspense>
+          <Icon />
+        </Suspense>
       </div>
-      <div className={style.items}>
+      <div className={styles.items}>
         <p>
           characters:
           <span>
-            {selectGeneralInfoLoading ? (
-              <CircularProgress size={16} color={"success"} />
+            {generalInfoLoading ? (
+              <Suspense>
+                <CircularProgress size={16} color={"success"} />
+              </Suspense>
             ) : (
               selectGeneralInfo?.characters?.info?.count
             )}
@@ -34,8 +40,10 @@ const NavBar: FC = () => {
         <p>
           episodes:
           <span>
-            {selectGeneralInfoLoading ? (
-              <CircularProgress size={16} color={"success"} />
+            {generalInfoLoading ? (
+              <Suspense>
+                <CircularProgress size={16} color={"success"} />
+              </Suspense>
             ) : (
               selectGeneralInfo?.episodes?.info?.count
             )}
@@ -45,10 +53,12 @@ const NavBar: FC = () => {
         <p>
           locations:
           <span>
-            {selectGeneralInfoLoading ? (
-              <CircularProgress size={16} color={"success"} />
+            {generalInfoLoading ? (
+              <Suspense>
+                <CircularProgress size={16} color={"success"} />
+              </Suspense>
             ) : (
-              selectGeneralInfo?.characters?.info?.count
+              selectGeneralInfo?.locations?.info?.count
             )}
           </span>
         </p>

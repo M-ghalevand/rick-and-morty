@@ -1,50 +1,50 @@
 import { useAppSelector } from "../store/ConfigureStore";
 import {
   select_general_info,
-  select_general_info_loading,
+  general_info_loading,
   selected_page,
   select_search_box,
-  selectedMode,
-  select_status,
-  select_specie,
-  select_gender,
-  select_info,
+  selectedThemeMode,
+  selected_status,
+  selected_species,
+  selected_gender,
+  selected_info,
   select_character_loading,
 } from "../store/slice/AppSlice";
 
 const useSelectors = () => {
-  //  themeMode It is a string that is dark or light to change the themeMode
-  const themeMode = useAppSelector(selectedMode);
-  // selectGeneralInfo There is an object that contains the number of pages and the number of characters
+  //  themeMode: dark | light (theme of the app)
+  const themeMode = useAppSelector(selectedThemeMode);
+  // selectGeneralInfo: total counts and number of pages of characters, locations and episodes.
   const selectGeneralInfo = useAppSelector(select_general_info);
-  // selectGeneralInfoLoading There is a boolean that gets information The related to api is GENERAL_INFO from the server when it wants
-  const selectGeneralInfoLoading = useAppSelector(select_general_info_loading);
-  // selectedPage Returns the searched text
+  // generalInfoLoading: status of the request for fetching general info
+  const generalInfoLoading = useAppSelector(general_info_loading);
+  // selectedPage: search box content
   const selectSearchBox = useAppSelector(select_search_box);
-  // selectedPage Returns the selected page
+  // selectedPage: selected page by user
   const selectedPage = useAppSelector(selected_page);
-  // selectStatus Returns the status of the character
-  const selectStatus = useAppSelector(select_status);
-  // selectSpecie Returns the specie of the character
-  const selectSpecie = useAppSelector(select_specie);
-  // selectGender Returns the gender of the character
-  const selectGender = useAppSelector(select_gender);
-  // selectInfo  is an object that takes the total number of characters and pages from the server
-  const selectInfo = useAppSelector(select_info);
-  // selectCharacterLoading There is a boolean that gets  Information related to api CHARACTERS from the server when it wants
-  const selectCharacterLoading = useAppSelector(select_character_loading);
+  // selectedStatus: selected status of the character for filtering (Alive | Dead | Unknown)
+  const selectedStatus = useAppSelector(selected_status);
+  // selectedSpecies: selected species of the character for filtering
+  const selectedSpecies = useAppSelector(selected_species);
+  // selectedGender: selected gender of the character for filtering
+  const selectedGender = useAppSelector(selected_gender);
+  // filteredInfo: total counts and number of pages of filtered/noneFiltered characters
+  const filteredInfo = useAppSelector(selected_info);
+  // characterLoading:status of the request for fetching characters info
+  const characterLoading = useAppSelector(select_character_loading);
 
   return {
     themeMode,
     selectGeneralInfo,
-    selectGeneralInfoLoading,
+    generalInfoLoading,
     selectSearchBox,
     selectedPage,
-    selectStatus,
-    selectSpecie,
-    selectGender,
-    selectInfo,
-    selectCharacterLoading,
+    selectedStatus,
+    selectedSpecies,
+    selectedGender,
+    filteredInfo,
+    characterLoading,
   };
 };
 

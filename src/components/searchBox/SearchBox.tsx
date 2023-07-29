@@ -5,7 +5,7 @@ import useSelectors from "../../hooks/useSelectors";
 import { useAppDispatch } from "../../store/ConfigureStore";
 import { setSearchBox } from "../../store/slice/AppSlice";
 
-const Search = () => {
+const SearchBox = () => {
   const dispatch = useAppDispatch();
   const { themeMode, selectSearchBox } = useSelectors();
 
@@ -22,7 +22,7 @@ const Search = () => {
     >
       <TextField
         value={selectSearchBox}
-        // This is done by typing dispatch, which updates the searchBox box in state redux
+        // When user types in the search box, a dispatch occurs to update the search box state.
         onChange={(e) => dispatch(setSearchBox(e.target.value))}
         color={"success"}
         fullWidth
@@ -34,4 +34,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchBox;

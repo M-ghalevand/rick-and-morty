@@ -1,21 +1,23 @@
-import type { FC } from "react";
+import { FC, lazy, Suspense } from "react";
 
-import styleHeader from "./header.module.scss";
+import styles from "./header.module.scss";
 import banner from "../../assets/img/banner.png";
-import { lazy } from "react";
-const NavBar = lazy(() => import("../navBar/NavBar"));
-const Search = lazy(() => import("../search/Search"));
+import NavBar from "../navBar/NavBar";
+
+const SearchBox = lazy(() => import("../searchBox/SearchBox"));
 const Header: FC = () => {
   return (
     <>
       <NavBar />
-      <div className={styleHeader.headerContainer}>
+      <div className={styles.headerContainer}>
         <img
           src={banner}
           alt="banner rick and morty"
-          className={styleHeader.bannerImage}
+          className={styles.bannerImage}
         />
-        <Search />
+        <Suspense>
+          <SearchBox />
+        </Suspense>
       </div>
     </>
   );

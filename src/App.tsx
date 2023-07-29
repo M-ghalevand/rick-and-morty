@@ -1,17 +1,31 @@
-import { FC, lazy, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useAppDispatch } from "./store/ConfigureStore";
 import { fetchCharacters, fetchGeneralInfo } from "./store/slice/AppSlice";
-
-const Header = lazy(() => import("./components/header/Header"));
-const Content = lazy(() => import("./components/content/Content"));
+import Header from "./components/header/Header";
+import Content from "./components/content/Content";
+import useSelectors from "./hooks/useSelectors";
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
+  const { selectedPage, selectedStatus, selectedGender, selectedSpecies } =
+    useSelectors();
 
+  //fetching characters based on one of the following factors or more specified by the user: selectedPage, status, gender, species
   useEffect(() => {
-    dispatch(fetchCharacters({ page: 1 }));
+    dispatch(
+      fetchCharacters({
+        page: selectedPage,
+        status: selectedStatus,
+        gender: selectedGender,
+        species: selectedSpecies,
+      })
+    );
+  }, [dispatch, selectedPage, selectedStatus, selectedGender, selectedSpecies]);
+
+  //fetching general info in first render
+  useEffect(() => {
     dispatch(fetchGeneralInfo());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

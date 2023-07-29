@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
-import IFetchCharacters from "../types/IFetchCharacters";
-// , filter: {species: ${species}, gender: ${gender}, status: ${status}}
+import IParamsToFetchCharacters from "../types/IParamsToFetchCharacters";
+
 const CHARACTERS = ({
   page = 1,
   species = "",
   gender = "",
   status = "",
-}: IFetchCharacters) => gql`
+}: IParamsToFetchCharacters) => gql`
   {
-    characters(page: ${page}, filter: { species: "${species}", gender: "${gender}", status: "${status}" }) {
+    characters(page: ${page}, filter: { species: "${species}", gender: "${gender}", status: "${status}"}) {
       info {
         count
         pages

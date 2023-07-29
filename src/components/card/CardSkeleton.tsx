@@ -1,14 +1,9 @@
 import type { FC } from "react";
-import {
-  Card as MuiCard,
-  CardActionArea,
-  Skeleton as MuiSkeleton,
-  CardContent,
-} from "@mui/material";
-const Skeleton: FC = () => {
+import { Card, Skeleton, CardContent } from "@mui/material";
+const CardSkeleton: FC = () => {
   return (
-    <MuiCard sx={{ position: "relative", width: 256, height: 380 }}>
-      <MuiSkeleton
+    <Card sx={{ position: "relative", width: 256, height: 380 }}>
+      <Skeleton
         animation="wave"
         variant="rounded"
         sx={{
@@ -17,7 +12,7 @@ const Skeleton: FC = () => {
           margin: "20px auto 0 auto",
         }}
       />
-      <MuiSkeleton
+      <Skeleton
         animation="wave"
         variant="rounded"
         sx={{
@@ -30,7 +25,7 @@ const Skeleton: FC = () => {
         }}
       />
       <CardContent>
-        <MuiSkeleton
+        <Skeleton
           animation="wave"
           variant="rounded"
           sx={{
@@ -38,7 +33,7 @@ const Skeleton: FC = () => {
             margin: "7px 0 20px 0",
           }}
         />
-        <MuiSkeleton
+        <Skeleton
           animation="wave"
           variant="rounded"
           sx={{
@@ -46,7 +41,7 @@ const Skeleton: FC = () => {
             margin: "7px 0 0 0",
           }}
         />
-        <MuiSkeleton
+        <Skeleton
           animation="wave"
           variant="rounded"
           sx={{
@@ -54,7 +49,7 @@ const Skeleton: FC = () => {
             margin: "7px 0 13px 0",
           }}
         />
-        <MuiSkeleton
+        <Skeleton
           animation="wave"
           variant="rounded"
           sx={{
@@ -62,7 +57,7 @@ const Skeleton: FC = () => {
             margin: "7px 0 0 0",
           }}
         />
-        <MuiSkeleton
+        <Skeleton
           animation="wave"
           variant="rounded"
           sx={{
@@ -71,7 +66,7 @@ const Skeleton: FC = () => {
           }}
         />
       </CardContent>
-    </MuiCard>
+    </Card>
   );
 };
-export default Skeleton;
+export default CardSkeleton;

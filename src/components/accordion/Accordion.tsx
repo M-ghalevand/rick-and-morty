@@ -8,62 +8,49 @@ import {
   Button,
 } from "@mui/material/";
 
-import style from "./accordion.module.scss";
+import styles from "./accordion.module.scss";
 import statusData from "../../data/status.json";
 import speciesData from "../../data/species.json";
 import gendersData from "../../data/genders.json";
 import { useAppDispatch } from "../../store/ConfigureStore";
+import useSelectors from "../../hooks/useSelectors";
 import {
-  fetchCharacters,
   setCharactersStatus,
   setGender,
-  setPagination,
   setSpecie,
 } from "../../store/slice/AppSlice";
-import useSelectors from "../../hooks/useSelectors";
+import { useCallback } from "react";
 
 const Accordion: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedPage, selectStatus, selectGender, selectSpecie } =
-    useSelectors();
-  const handleStatus = (status: string): void => {
-    dispatch(setCharactersStatus(selectStatus !== status ? status : ""));
-    dispatch(setPagination(1));
-    dispatch(
-      fetchCharacters({
-        page: selectedPage,
-        status: selectStatus !== status ? status : "",
-        species: selectSpecie,
-        gender: selectGender,
-      })
-    );
-  };
-  const handleSpecie = (species: string): void => {
-    dispatch(setSpecie(selectSpecie !== species ? species : ""));
-    dispatch(setPagination(1));
-    dispatch(
-      fetchCharacters({
-        page: selectedPage,
-        status: selectStatus,
-        species: selectSpecie !== species ? species : "",
-        gender: selectGender,
-      })
-    );
-  };
-  const handleGender = (gender: string): void => {
-    dispatch(setGender(selectGender !== gender ? gender : ""));
-    dispatch(setPagination(1));
-    dispatch(
-      fetchCharacters({
-        page: selectedPage,
-        status: selectStatus,
-        species: selectSpecie,
-        gender: selectGender !== gender ? gender : "",
-      })
-    );
-  };
+  const { selectedStatus, selectedGender, selectedSpecies } = useSelectors();
+
+  //to set status of character if not selected to filter characters.
+  const handleStatus = useCallback(
+    (status: string): void => {
+      dispatch(setCharactersStatus(selectedStatus !== status ? status : ""));
+    },
+    [dispatch, selectedStatus]
+  );
+
+  //to set species of character if not selected to filter characters.
+  const handleSpecies = useCallback(
+    (species: string): void => {
+      dispatch(setSpecie(selectedSpecies !== species ? species : ""));
+    },
+    [dispatch, selectedSpecies]
+  );
+
+  //to set gender of character if not selected to filter characters.
+  const handleGender = useCallback(
+    (gender: string): void => {
+      dispatch(setGender(selectedGender !== gender ? gender : ""));
+    },
+    [dispatch, selectedGender]
+  );
+
   return (
-    <div className={style.AccordionRoot}>
+    <div className={styles.AccordionRoot}>
       <MUIAccordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -71,15 +58,15 @@ const Accordion: FC = () => {
           id="panel1a-header"
         >
           <Typography>Status</Typography>
-          {selectStatus && (
-            <span className={style.AccordionSelected}>{selectStatus}</span>
+          {selectedStatus && (
+            <span className={styles.AccordionSelected}>{selectedStatus}</span>
           )}
         </AccordionSummary>
         <AccordionDetails>
           {statusData.map((status) => (
             <Button
               key={status}
-              variant={selectStatus === status ? "contained" : "outlined"}
+              variant={selectedStatus === status ? "contained" : "outlined"}
               size="small"
               color={"success"}
               sx={{ margin: "10px" }}
@@ -97,21 +84,21 @@ const Accordion: FC = () => {
           id="panel2a-header"
         >
           <Typography>Species</Typography>
-          {selectSpecie && (
-            <span className={style.AccordionSelected}>{selectSpecie}</span>
+          {selectedSpecies && (
+            <span className={styles.AccordionSelected}>{selectedSpecies}</span>
           )}
         </AccordionSummary>
         <AccordionDetails>
-          {speciesData.map((specie) => (
+          {speciesData.map((species) => (
             <Button
-              key={specie}
-              variant={selectSpecie === specie ? "contained" : "outlined"}
+              key={species}
+              variant={selectedSpecies === species ? "contained" : "outlined"}
               size="small"
               color={"success"}
               sx={{ margin: "10px" }}
-              onClick={() => handleSpecie(specie)}
+              onClick={() => handleSpecies(species)}
             >
-              {specie}
+              {species}
             </Button>
           ))}
         </AccordionDetails>
@@ -123,15 +110,15 @@ const Accordion: FC = () => {
           id="panel2a-header"
         >
           <Typography>Genders </Typography>
-          {selectGender && (
-            <span className={style.AccordionSelected}>{selectGender}</span>
+          {selectedGender && (
+            <span className={styles.AccordionSelected}>{selectedGender}</span>
           )}
         </AccordionSummary>
         <AccordionDetails>
           {gendersData.map((gender) => (
             <Button
               key={gender}
-              variant={selectGender === gender ? "contained" : "outlined"}
+              variant={selectedGender === gender ? "contained" : "outlined"}
               size="small"
               color={"success"}
               sx={{ margin: "10px" }}

@@ -1,15 +1,9 @@
 import type { Dispatch, FC, SetStateAction } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MUIModal from "@mui/material/Modal";
 import ICharacterResult from "../../types/ICharacterResult";
-import { useSelector } from "react-redux";
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector,
-} from "../../store/ConfigureStore";
+import { RootState, useAppSelector } from "../../store/ConfigureStore";
 import { selectById } from "../../store/slice/AppSlice";
 import { CardContent, CardMedia } from "@mui/material";
 

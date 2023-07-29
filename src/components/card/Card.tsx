@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { FC, useState, lazy, Suspense } from "react";
 import {
   Card as MuiCard,
   CardContent,
@@ -7,21 +7,27 @@ import {
   CardActionArea,
 } from "@mui/material";
 import type ICharacterResult from "../../types/ICharacterResult";
-import Modal from "../modal/Modal";
-import { useState } from "react";
 
-const Card: FC<ICharacterResult> = ({
+const Modal = lazy(() => import("../modal/Modal"));
+
+const Card: FC<ICharacterResult & { color: string }> = ({
   id,
   episode,
   image,
   location,
   name,
   status,
+  color,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
+
   return (
     <MuiCard>
-      <Modal open={open} setOpen={setOpen} id={id} />
+      {open && (
+        <Suspense>
+          <Modal open={open} setOpen={setOpen} id={id} />
+        </Suspense>
+      )}
       <CardActionArea
         sx={{ position: "relative", width: 256, height: 380 }}
         onClick={() => setOpen(true)}
@@ -44,11 +50,12 @@ const Card: FC<ICharacterResult> = ({
             position: "absolute",
             top: "20px",
             right: "18px",
-            backgroundColor: btnColor(status),
+            backgroundColor: color,
             borderRadius: "7px",
             padding: "2px",
             minWidth: "60px",
             textAlign: "center",
+            color: "white",
           }}
         >
           {status}
@@ -84,16 +91,3 @@ const Card: FC<ICharacterResult> = ({
 };
 
 export default Card;
-
-const btnColor = (status: string): string => {
-  switch (status) {
-    case "Alive":
-      return "#247F66";
-    case "Dead":
-      return "#c01010";
-    case "unknown":
-      return "#c01010";
-    default:
-      return "#5d5d5d";
-  }
-};

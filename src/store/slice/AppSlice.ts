@@ -1,59 +1,46 @@
 import {
-  AsyncThunk,
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
 import type IGeneralInfo from "../../types/IGeneralInfo";
-import type IAppSliceInitialState from "../../types/IAppSliceInitialState";
+import type IInitialStateAppSlice from "../../types/IInitialStateAppSlice";
 import type ICharacterResult from "../../types/ICharacterResult";
-import type IFetchCharacters from "../../types/IFetchCharacters";
+import type IParamsToFetchCharacters from "../../types/IParamsToFetchCharacters";
 import type IResponseCharacters from "../../types/IResponseCharacters";
-import { AppDispatch, RootState } from "../ConfigureStore";
+import { RootState } from "../ConfigureStore";
 import { apolloClient } from "../../graphql/apolloClient";
 import CHARACTERS from "../../graphql/CHARACTERS";
 import GENERAL_INFO from "../../graphql/GENERAL_INFO";
 
-// fetchCharacters There is a function that takes the input of an object that has a page,
-// it takes a status, a species, a gender, which is included in the IResponseCharacters information response.
-export const fetchCharacters: AsyncThunk<
+//  fetchCharacters takes some parameters selected by the user and returns related list of characters.
+export const fetchCharacters = createAsyncThunk<
   IResponseCharacters,
-  IFetchCharacters,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-  }
-> = createAsyncThunk(
-  "AsyncThunk/Characters",
-  async ({ page, status, species, gender }) => {
+  IParamsToFetchCharacters
+>("AsyncThunk/Characters", async ({ page, status, species, gender }) => {
+  const { data } = await apolloClient.query({
+    query: CHARACTERS({ page, status, species, gender }),
+  });
+  return data;
+});
+// fetchGeneralInfo: returns total counts of characters, episodes and locations.
+export const fetchGeneralInfo = createAsyncThunk<IGeneralInfo>(
+  "AsyncThunk/GeneralInfo",
+  async () => {
     const { data } = await apolloClient.query({
-      query: CHARACTERS({ page, status, species, gender }),
+      query: GENERAL_INFO,
     });
-    return data;
+
+    return {
+      characters: data.characters,
+      episodes: data.episodes,
+      locations: data.locations,
+    };
   }
 );
-// fetchGeneralInfo There is a function included in returning IGeneralInfo information
-export const fetchGeneralInfo: AsyncThunk<
-  IGeneralInfo,
-  undefined,
-  {
-    dispatch: AppDispatch;
-    state: RootState;
-  }
-> = createAsyncThunk("AsyncThunk/GeneralInfo", async () => {
-  const { data } = await apolloClient.query({
-    query: GENERAL_INFO,
-  });
 
-  return {
-    characters: data.characters,
-    episodes: data.episodes,
-    locations: data.locations,
-  };
-});
-
-//  sortComparer Sorts according to id
+//  sortComparer: Sorts according to id
 const adapter = createEntityAdapter<ICharacterResult>({
   sortComparer: (a, b) => Number(a.id) - Number(b.id),
 });
@@ -61,13 +48,13 @@ export const { selectEntities, selectById } = adapter.getSelectors(
   (state: RootState) => state.AppSlice
 );
 const Mode = typeof window !== "undefined" && localStorage.getItem("Mode");
-const initialState = adapter.getInitialState<IAppSliceInitialState>({
+const initialState = adapter.getInitialState<IInitialStateAppSlice>({
   themeMode: Mode === "dark" ? "dark" : "light",
   loading: true,
   searchBox: "",
   page: 1,
   status: "",
-  specie: "",
+  species: "",
   gender: "",
   info: {
     count: 0,
@@ -100,45 +87,48 @@ const AppSlice = createSlice({
   name: "AppSlice",
   initialState,
   reducers: {
-    // change Pagination to state
+    // set selected page to state
     setPagination(state, action: PayloadAction<number>) {
       state.page = action.payload;
     },
-    // change searchBox to state
+    // set search box content to state
     setSearchBox(state, action: PayloadAction<string>) {
       state.searchBox = action.payload;
     },
-    // change themeMode to state
+    // set selected theme mode to state
     changeModeTheme(state, action: PayloadAction<"light" | "dark">) {
       state.themeMode = action.payload;
       localStorage.setItem("Mode", action.payload);
     },
-    // change status to state
+    // set selected status of character to state
     setCharactersStatus(state, action: PayloadAction<string>) {
       state.status = action.payload;
+      state.page = 1;
     },
-    // change specie to state
+    // set selected species of character to state
     setSpecie(state, action: PayloadAction<string>) {
-      state.specie = action.payload;
+      state.species = action.payload;
+      state.page = 1;
     },
-    // change gender to state
+    // set selected gender of character to state
     setGender(state, action: PayloadAction<string>) {
       state.gender = action.payload;
+      state.page = 1;
     },
-    // Delete status, specie, specie information from  state
-    clearAll(state) {
+    // Reset related states of status, species, gender and page.
+    clearAllFilters(state) {
       state.status = "";
-      state.specie = "";
+      state.species = "";
       state.gender = "";
+      state.page = 1;
     },
   },
-
   extraReducers: (builder) => {
-    //  When it is in pending mode, loading true to state
+    //  When the request is in pending mode, loading sets to true in state
     builder.addCase(fetchCharacters.pending, (state) => {
       state.loading = true;
     });
-    //  When it is fulfilled, the adapter is setAll, loading false to state and info information is updated in state
+    //  When request is fulfilled, entity sets by all characters, info sets in info state and loading sets to false.
     builder.addCase(
       fetchCharacters.fulfilled,
       (state, action: PayloadAction<IResponseCharacters>) => {
@@ -148,11 +138,11 @@ const AppSlice = createSlice({
         state.loading = false;
       }
     );
-    //  When it is in pending mode, GeneralInfo.loading true to state
-    builder.addCase(fetchGeneralInfo.pending, (state, action) => {
+    //  When the request is in pending mode, loading of GeneralInfo sets to true
+    builder.addCase(fetchGeneralInfo.pending, (state) => {
       state.GeneralInfo.loading = true;
     });
-    //  When it is fulfilled, GeneralInfo information is updated in state
+    //  When the request is fulfilled, updated GeneralInfo sets to state
     builder.addCase(
       fetchGeneralInfo.fulfilled,
       (state, action: PayloadAction<IGeneralInfo>) => {
@@ -181,20 +171,20 @@ export const {
   setCharactersStatus,
   setSpecie,
   setGender,
-  clearAll,
+  clearAllFilters,
 } = AppSlice.actions;
 export default AppSlice.reducer;
 
-export const selectedMode = (state: RootState) => state.AppSlice.themeMode;
+export const selectedThemeMode = (state: RootState) => state.AppSlice.themeMode;
 export const select_general_info = (state: RootState) =>
   state.AppSlice.GeneralInfo;
-export const select_general_info_loading = (state: RootState) =>
+export const general_info_loading = (state: RootState) =>
   state.AppSlice.GeneralInfo.loading;
 export const select_character_loading = (state: RootState) =>
   state.AppSlice.loading;
 export const select_search_box = (state: RootState) => state.AppSlice.searchBox;
 export const selected_page = (state: RootState) => state.AppSlice.page;
-export const select_status = (state: RootState) => state.AppSlice.status;
-export const select_specie = (state: RootState) => state.AppSlice.specie;
-export const select_gender = (state: RootState) => state.AppSlice.gender;
-export const select_info = (state: RootState) => state.AppSlice.info;
+export const selected_status = (state: RootState) => state.AppSlice.status;
+export const selected_species = (state: RootState) => state.AppSlice.species;
+export const selected_gender = (state: RootState) => state.AppSlice.gender;
+export const selected_info = (state: RootState) => state.AppSlice.info;
