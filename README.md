@@ -20,7 +20,7 @@
 ## Demo
 
 نسخه پابلیش شده روی سرور 
- [لینک](https://rick-and-morty-git-master-m-ghalevand.vercel.app/)
+ [لینک](https://rick-and-morty-nine-pi.vercel.app/)
 
 ---
 ## Installation

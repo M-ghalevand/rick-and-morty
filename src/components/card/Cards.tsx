@@ -9,7 +9,7 @@ const CardSkeleton = lazy(() => import("./CardSkeleton"));
 const Card = lazy(() => import("./Card"));
 
 const Cards: FC = () => {
-  const { selectSearchBox, characterLoading } = useSelectors();
+  const {  characterLoading } = useSelectors();
 
   const SelectEntities = useAppSelector(selectEntities);
   const SelectEntitiesArray = Object.values(

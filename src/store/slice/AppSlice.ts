@@ -121,7 +121,9 @@ const AppSlice = createSlice({
       state.status = "";
       state.species = "";
       state.gender = "";
+      state.searchBox = ""
       state.page = 1;
+
     },
   },
   extraReducers: (builder) => {

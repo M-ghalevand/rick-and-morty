@@ -1,4 +1,4 @@
-import { FC, lazy, useCallback, Suspense } from "react";
+import {FC, lazy, Suspense, useCallback} from "react";
 
 import styles from "./filters.module.scss";
 import useSelectors from "../../hooks/useSelectors";
@@ -10,7 +10,7 @@ const Button = lazy(() => import("@mui/material/Button"));
 
 const Filters: FC = () => {
   const dispatch = useAppDispatch();
-  const { selectedStatus, selectedGender, selectedSpecies } = useSelectors();
+  const { selectedStatus, selectedGender, selectedSpecies,selectSearchBox } = useSelectors();
 
   // When user clicks on Clear all button, two dispatches occurs.
   // clearAllFilters for clearing all applied filters,
@@ -21,7 +21,7 @@ const Filters: FC = () => {
   return (
     <div className={styles.filterRoot}>
       <p className={styles.title}>filters</p>
-      {(selectedStatus || selectedGender || selectedSpecies) && (
+      {(selectedStatus || selectedGender || selectedSpecies ||selectSearchBox) && (
         <Suspense>
           <Button
             variant={"outlined"}
@@ -30,7 +30,7 @@ const Filters: FC = () => {
             sx={{ position: "absolute", top: "-30px", right: "20px" }}
             onClick={handleClearAllFilters}
           >
-            Clear all
+            Clear all Filters
           </Button>
         </Suspense>
       )}
